@@ -334,7 +334,9 @@
             document.addEventListener('click', this.handleOutsideClick);
 
             // Vérifier le consentement - afficher le dialogue si nécessaire
-            if (this.config.settings.require_consent && !this.hasConsent) {
+            // Par défaut, le consentement est requis (RGPD) sauf si explicitement désactivé
+            const requireConsent = this.config.settings.require_consent !== false;
+            if (requireConsent && !this.hasConsent) {
                 this.showConsentDialog();
                 // Ne pas focus sur l'input, le dialogue de consentement va prendre le focus
                 return;
@@ -527,7 +529,9 @@
          */
         async sendMessage(message = null) {
             // Vérifier le consentement avant tout envoi
-            if (this.config.settings.require_consent && !this.hasConsent) {
+            // Par défaut, le consentement est requis (RGPD) sauf si explicitement désactivé
+            const requireConsent = this.config.settings.require_consent !== false;
+            if (requireConsent && !this.hasConsent) {
                 this.showError(this.config.labels.consent_required || 'Vous devez accepter les conditions pour utiliser le chat.');
                 return;
             }
