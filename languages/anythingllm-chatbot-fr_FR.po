@@ -1,0 +1,641 @@
+# French translation for Ocade Fusion AnythingLLM Chatbot
+# Copyright (C) 2024 Ocade Fusion
+# This file is distributed under the same license as the AnythingLLM Chatbot plugin.
+# Ocade Fusion <contact@ocadefusion.fr>, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Ocade Fusion AnythingLLM Chatbot 1.0.0\n"
+"Report-Msgid-Bugs-To: https://ocadefusion.fr/support\n"
+"POT-Creation-Date: 2024-01-15 12:00:00+00:00\n"
+"PO-Revision-Date: 2024-01-15 12:00:00+00:00\n"
+"Last-Translator: Ocade Fusion <contact@ocadefusion.fr>\n"
+"Language-Team: French <fr@li.org>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: Plugin name
+msgid "Ocade Fusion AnythingLLM Chatbot"
+msgstr "Ocade Fusion AnythingLLM Chatbot"
+
+#: Plugin description
+msgid "Integrate an intelligent chatbot powered by AnythingLLM into your WordPress site. RGAA and GDPR compliant."
+msgstr "Intégrez un chatbot intelligent propulsé par AnythingLLM à votre site WordPress. Conforme RGAA et RGPD."
+
+#. Accessibility labels
+msgid "Skip to chatbot"
+msgstr "Aller au chatbot"
+
+msgid "Open chatbot"
+msgstr "Ouvrir le chatbot"
+
+msgid "Close chatbot"
+msgstr "Fermer le chatbot"
+
+msgid "Send message"
+msgstr "Envoyer le message"
+
+msgid "Type your message"
+msgstr "Tapez votre message"
+
+msgid "Type your message..."
+msgstr "Tapez votre message..."
+
+msgid "AI Assistant"
+msgstr "Assistant IA"
+
+msgid "Chat conversation"
+msgstr "Conversation de chat"
+
+msgid "Message from assistant"
+msgstr "Message de l'assistant"
+
+msgid "Message from user"
+msgstr "Message de l'utilisateur"
+
+msgid "System message"
+msgstr "Message système"
+
+msgid "Assistant is typing"
+msgstr "L'assistant écrit"
+
+msgid "Attach file"
+msgstr "Joindre un fichier"
+
+msgid "Copy message"
+msgstr "Copier le message"
+
+msgid "Thumbs up"
+msgstr "J'aime"
+
+msgid "Thumbs down"
+msgstr "Je n'aime pas"
+
+msgid "Message copied"
+msgstr "Message copié"
+
+msgid "Feedback recorded"
+msgstr "Avis enregistré"
+
+#. Welcome and fallback messages
+msgid "Hello! How can I help you?"
+msgstr "Bonjour ! Comment puis-je vous aider ?"
+
+msgid "Sorry, I'm not available right now. Please try again later."
+msgstr "Désolé, je ne suis pas disponible actuellement. Veuillez réessayer plus tard."
+
+#. Error messages
+msgid "An error occurred. Please try again."
+msgstr "Une erreur s'est produite. Veuillez réessayer."
+
+msgid "Connection error. Please check your internet connection."
+msgstr "Erreur de connexion. Veuillez vérifier votre connexion internet."
+
+msgid "Too many requests. Please wait before sending another message."
+msgstr "Trop de requêtes. Veuillez patienter avant d'envoyer un autre message."
+
+msgid "File too large. Maximum size is %s MB."
+msgstr "Fichier trop volumineux. La taille maximale est de %s Mo."
+
+msgid "File type not allowed."
+msgstr "Type de fichier non autorisé."
+
+msgid "Message too long. Maximum length is %d characters."
+msgstr "Message trop long. La longueur maximale est de %d caractères."
+
+msgid "Please enter a message."
+msgstr "Veuillez entrer un message."
+
+msgid "API connection failed."
+msgstr "La connexion à l'API a échoué."
+
+msgid "Invalid response from server."
+msgstr "Réponse invalide du serveur."
+
+#. Consent dialog
+msgid "Privacy Notice"
+msgstr "Avis de confidentialité"
+
+msgid "This chatbot collects conversation data to provide you with the best possible assistance. By using this chatbot, you consent to the collection and processing of your messages in accordance with our privacy policy."
+msgstr "Ce chatbot collecte des données de conversation pour vous fournir la meilleure assistance possible. En utilisant ce chatbot, vous consentez à la collecte et au traitement de vos messages conformément à notre politique de confidentialité."
+
+msgid "Your data is stored securely and will be automatically deleted after %d days."
+msgstr "Vos données sont stockées de manière sécurisée et seront automatiquement supprimées après %d jours."
+
+msgid "Read our privacy policy"
+msgstr "Lire notre politique de confidentialité"
+
+msgid "Accept"
+msgstr "Accepter"
+
+msgid "Decline"
+msgstr "Refuser"
+
+msgid "You must accept the privacy policy to use the chatbot."
+msgstr "Vous devez accepter la politique de confidentialité pour utiliser le chatbot."
+
+#. Commands
+msgid "Available commands:"
+msgstr "Commandes disponibles :"
+
+msgid "/reset - Reset the conversation"
+msgstr "/reset - Réinitialiser la conversation"
+
+msgid "/help - Show available commands"
+msgstr "/help - Afficher les commandes disponibles"
+
+msgid "/export - Export the conversation"
+msgstr "/export - Exporter la conversation"
+
+msgid "Conversation has been reset."
+msgstr "La conversation a été réinitialisée."
+
+msgid "Conversation exported successfully."
+msgstr "Conversation exportée avec succès."
+
+#. Admin menu
+msgid "Chatbot"
+msgstr "Chatbot"
+
+msgid "Settings"
+msgstr "Paramètres"
+
+msgid "Logs"
+msgstr "Journaux"
+
+msgid "Statistics"
+msgstr "Statistiques"
+
+msgid "GDPR Tools"
+msgstr "Outils RGPD"
+
+#. Admin settings - API tab
+msgid "API Configuration"
+msgstr "Configuration de l'API"
+
+msgid "API URL"
+msgstr "URL de l'API"
+
+msgid "Enter the URL of your AnythingLLM instance"
+msgstr "Entrez l'URL de votre instance AnythingLLM"
+
+msgid "API Key"
+msgstr "Clé API"
+
+msgid "Enter your AnythingLLM API key"
+msgstr "Entrez votre clé API AnythingLLM"
+
+msgid "Workspace Slug"
+msgstr "Slug du workspace"
+
+msgid "Enter the workspace slug to use"
+msgstr "Entrez le slug du workspace à utiliser"
+
+msgid "Timeout"
+msgstr "Délai d'attente"
+
+msgid "API request timeout in seconds"
+msgstr "Délai d'attente des requêtes API en secondes"
+
+msgid "Test Connection"
+msgstr "Tester la connexion"
+
+msgid "Testing..."
+msgstr "Test en cours..."
+
+msgid "Connection successful!"
+msgstr "Connexion réussie !"
+
+msgid "Connection failed."
+msgstr "La connexion a échoué."
+
+#. Admin settings - General tab
+msgid "General Settings"
+msgstr "Paramètres généraux"
+
+msgid "Enable Chatbot"
+msgstr "Activer le chatbot"
+
+msgid "Display the chatbot on your site"
+msgstr "Afficher le chatbot sur votre site"
+
+msgid "Position"
+msgstr "Position"
+
+msgid "Bottom Right"
+msgstr "En bas à droite"
+
+msgid "Bottom Left"
+msgstr "En bas à gauche"
+
+msgid "Top Right"
+msgstr "En haut à droite"
+
+msgid "Top Left"
+msgstr "En haut à gauche"
+
+msgid "Allowed Roles"
+msgstr "Rôles autorisés"
+
+msgid "Leave empty to allow all visitors"
+msgstr "Laissez vide pour autoriser tous les visiteurs"
+
+#. Admin settings - Appearance tab
+msgid "Appearance"
+msgstr "Apparence"
+
+msgid "Theme Mode"
+msgstr "Mode du thème"
+
+msgid "Auto (system preference)"
+msgstr "Auto (préférence système)"
+
+msgid "Light"
+msgstr "Clair"
+
+msgid "Dark"
+msgstr "Sombre"
+
+msgid "Primary Color"
+msgstr "Couleur principale"
+
+msgid "Desktop Width"
+msgstr "Largeur bureau"
+
+msgid "Desktop Height"
+msgstr "Hauteur bureau"
+
+msgid "Bot Avatar"
+msgstr "Avatar du bot"
+
+msgid "User Avatar"
+msgstr "Avatar utilisateur"
+
+msgid "Select Image"
+msgstr "Sélectionner une image"
+
+msgid "Remove"
+msgstr "Supprimer"
+
+#. Admin settings - Messages tab
+msgid "Messages"
+msgstr "Messages"
+
+msgid "Welcome Message"
+msgstr "Message de bienvenue"
+
+msgid "Fallback Message"
+msgstr "Message de secours"
+
+msgid "Placeholder Text"
+msgstr "Texte d'espace réservé"
+
+msgid "Quick Replies"
+msgstr "Réponses rapides"
+
+msgid "Enter quick reply suggestions (one per line)"
+msgstr "Entrez les suggestions de réponse rapide (une par ligne)"
+
+#. Admin settings - Files tab
+msgid "File Uploads"
+msgstr "Téléchargement de fichiers"
+
+msgid "Enable File Uploads"
+msgstr "Activer le téléchargement de fichiers"
+
+msgid "Maximum File Size (MB)"
+msgstr "Taille maximale du fichier (Mo)"
+
+msgid "Allowed File Types"
+msgstr "Types de fichiers autorisés"
+
+msgid "Comma-separated list of extensions"
+msgstr "Liste d'extensions séparées par des virgules"
+
+#. Admin settings - Security tab
+msgid "Security"
+msgstr "Sécurité"
+
+msgid "Rate Limiting"
+msgstr "Limitation de débit"
+
+msgid "Maximum requests per minute"
+msgstr "Nombre maximum de requêtes par minute"
+
+msgid "Maximum Message Length"
+msgstr "Longueur maximale du message"
+
+msgid "Honeypot Protection"
+msgstr "Protection anti-spam Honeypot"
+
+#. Admin settings - Privacy tab
+msgid "Privacy"
+msgstr "Confidentialité"
+
+msgid "Data Retention"
+msgstr "Conservation des données"
+
+msgid "Number of days to keep conversation data"
+msgstr "Nombre de jours de conservation des données de conversation"
+
+msgid "Privacy Policy URL"
+msgstr "URL de la politique de confidentialité"
+
+msgid "Enable Logging"
+msgstr "Activer la journalisation"
+
+msgid "Store conversations in database"
+msgstr "Stocker les conversations dans la base de données"
+
+#. Admin settings - Accessibility tab
+msgid "Accessibility"
+msgstr "Accessibilité"
+
+msgid "Show Skip Link"
+msgstr "Afficher le lien de saut"
+
+msgid "Add a skip link for keyboard navigation"
+msgstr "Ajouter un lien de saut pour la navigation au clavier"
+
+msgid "ARIA Labels"
+msgstr "Labels ARIA"
+
+msgid "Customize accessibility labels"
+msgstr "Personnaliser les labels d'accessibilité"
+
+#. Admin settings - Cache tab
+msgid "Cache"
+msgstr "Cache"
+
+msgid "Cache Duration"
+msgstr "Durée du cache"
+
+msgid "Duration in seconds (0 to disable)"
+msgstr "Durée en secondes (0 pour désactiver)"
+
+msgid "Clear Cache"
+msgstr "Vider le cache"
+
+msgid "Cache cleared successfully."
+msgstr "Cache vidé avec succès."
+
+#. Admin settings - Import/Export
+msgid "Import/Export Settings"
+msgstr "Importer/Exporter les paramètres"
+
+msgid "Export Settings"
+msgstr "Exporter les paramètres"
+
+msgid "Import Settings"
+msgstr "Importer les paramètres"
+
+msgid "Choose a JSON file to import"
+msgstr "Choisissez un fichier JSON à importer"
+
+msgid "Settings exported successfully."
+msgstr "Paramètres exportés avec succès."
+
+msgid "Settings imported successfully."
+msgstr "Paramètres importés avec succès."
+
+msgid "Import failed. Please check the file format."
+msgstr "L'importation a échoué. Veuillez vérifier le format du fichier."
+
+#. Admin logs
+msgid "Conversation Logs"
+msgstr "Journaux de conversation"
+
+msgid "Search conversations..."
+msgstr "Rechercher des conversations..."
+
+msgid "Filter by date"
+msgstr "Filtrer par date"
+
+msgid "All dates"
+msgstr "Toutes les dates"
+
+msgid "Today"
+msgstr "Aujourd'hui"
+
+msgid "Last 7 days"
+msgstr "7 derniers jours"
+
+msgid "Last 30 days"
+msgstr "30 derniers jours"
+
+msgid "Session ID"
+msgstr "ID de session"
+
+msgid "Started"
+msgstr "Démarré"
+
+msgctxt "column header"
+msgid "Messages"
+msgstr "Messages"
+
+msgid "Actions"
+msgstr "Actions"
+
+msgid "View"
+msgstr "Voir"
+
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Bulk Actions"
+msgstr "Actions groupées"
+
+msgid "Delete Selected"
+msgstr "Supprimer la sélection"
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "No conversations found."
+msgstr "Aucune conversation trouvée."
+
+msgid "Conversation Details"
+msgstr "Détails de la conversation"
+
+msgid "User"
+msgstr "Utilisateur"
+
+msgid "Assistant"
+msgstr "Assistant"
+
+msgid "System"
+msgstr "Système"
+
+msgid "Are you sure you want to delete this conversation?"
+msgstr "Êtes-vous sûr de vouloir supprimer cette conversation ?"
+
+msgid "Conversation deleted successfully."
+msgstr "Conversation supprimée avec succès."
+
+#. Admin statistics
+msgid "Statistics Dashboard"
+msgstr "Tableau de bord des statistiques"
+
+msgid "Total Conversations"
+msgstr "Total des conversations"
+
+msgid "Total Messages"
+msgstr "Total des messages"
+
+msgid "Average Response Time"
+msgstr "Temps de réponse moyen"
+
+msgid "Error Rate"
+msgstr "Taux d'erreur"
+
+msgid "Conversations Over Time"
+msgstr "Conversations dans le temps"
+
+msgid "Last 7 Days"
+msgstr "7 derniers jours"
+
+msgid "Last 30 Days"
+msgstr "30 derniers jours"
+
+msgid "Last 90 Days"
+msgstr "90 derniers jours"
+
+msgid "Enable Statistics"
+msgstr "Activer les statistiques"
+
+msgid "Statistics disabled. Enable in settings to view data."
+msgstr "Statistiques désactivées. Activez-les dans les paramètres pour voir les données."
+
+#. Admin GDPR
+msgid "GDPR Compliance Tools"
+msgstr "Outils de conformité RGPD"
+
+msgid "Export User Data"
+msgstr "Exporter les données utilisateur"
+
+msgid "Enter email or user ID"
+msgstr "Entrez l'email ou l'ID utilisateur"
+
+msgid "Export"
+msgstr "Exporter"
+
+msgid "Delete User Data"
+msgstr "Supprimer les données utilisateur"
+
+msgctxt "GDPR action"
+msgid "Delete"
+msgstr "Supprimer"
+
+msgid "Warning: This action cannot be undone."
+msgstr "Attention : Cette action est irréversible."
+
+msgid "Cleanup Expired Data"
+msgstr "Nettoyer les données expirées"
+
+msgid "Run Cleanup"
+msgstr "Lancer le nettoyage"
+
+msgid "Cleanup completed. %d records deleted."
+msgstr "Nettoyage terminé. %d enregistrements supprimés."
+
+msgid "Data Retention Policy"
+msgstr "Politique de conservation des données"
+
+msgid "Current retention period: %d days"
+msgstr "Période de conservation actuelle : %d jours"
+
+msgid "User data exported successfully."
+msgstr "Données utilisateur exportées avec succès."
+
+msgid "User data deleted successfully."
+msgstr "Données utilisateur supprimées avec succès."
+
+msgid "No data found for this user."
+msgstr "Aucune donnée trouvée pour cet utilisateur."
+
+msgid "Please enter a valid email or user ID."
+msgstr "Veuillez entrer un email ou un ID utilisateur valide."
+
+#. Shortcode and Block
+msgid "AnythingLLM Chatbot"
+msgstr "Chatbot AnythingLLM"
+
+msgid "Display the AI chatbot on your page."
+msgstr "Afficher le chatbot IA sur votre page."
+
+msgid "Chatbot Title"
+msgstr "Titre du chatbot"
+
+msgid "Chatbot Position"
+msgstr "Position du chatbot"
+
+msgid "Use default settings"
+msgstr "Utiliser les paramètres par défaut"
+
+#. Requirements errors
+msgid "Ocade Fusion AnythingLLM Chatbot requires PHP %2$s or higher. Your current version is %1$s."
+msgstr "Ocade Fusion AnythingLLM Chatbot nécessite PHP %2$s ou supérieur. Votre version actuelle est %1$s."
+
+msgid "Ocade Fusion AnythingLLM Chatbot requires WordPress %2$s or higher. Your current version is %1$s."
+msgstr "Ocade Fusion AnythingLLM Chatbot nécessite WordPress %2$s ou supérieur. Votre version actuelle est %1$s."
+
+#. Misc
+msgid "Save Changes"
+msgstr "Enregistrer les modifications"
+
+msgid "Settings saved."
+msgstr "Paramètres enregistrés."
+
+msgid "seconds"
+msgstr "secondes"
+
+msgid "characters"
+msgstr "caractères"
+
+msgid "days"
+msgstr "jours"
+
+msgid "Loading..."
+msgstr "Chargement..."
+
+msgid "Error"
+msgstr "Erreur"
+
+msgid "Success"
+msgstr "Succès"
+
+msgid "Warning"
+msgstr "Avertissement"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Close"
+msgstr "Fermer"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Confirm"
+msgstr "Confirmer"
+
+msgid "Yes"
+msgstr "Oui"
+
+msgid "No"
+msgstr "Non"
+
+msgid "Previous"
+msgstr "Précédent"
+
+msgid "Next"
+msgstr "Suivant"
+
+msgid "of"
+msgstr "sur"
+
+msgid "items"
+msgstr "éléments"

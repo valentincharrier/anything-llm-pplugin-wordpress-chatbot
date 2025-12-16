@@ -1,0 +1,567 @@
+# Copyright (C) 2024 Ocade Fusion
+# This file is distributed under the GPL v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Ocade Fusion AnythingLLM Chatbot 1.0.0\n"
+"Report-Msgid-Bugs-To: https://ocadefusion.com/contact\n"
+"POT-Creation-Date: 2024-01-01 00:00:00+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: anythingllm-chatbot\n"
+
+#: includes/class-ofac-accessibility.php
+msgid "Skip to chatbot"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Open chat"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Close chat"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Send message"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Typing indicator"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "New message received"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Message sent"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Error occurred"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Chat history cleared"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Message copied to clipboard"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Upload file"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "File uploaded successfully"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Rate as helpful"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Rate as not helpful"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Chat opened"
+msgstr ""
+
+#: includes/class-ofac-accessibility.php
+msgid "Chat closed"
+msgstr ""
+
+#: includes/class-ofac-consent.php
+msgid "We use cookies and data collection to improve your experience with our chatbot. By clicking \"Accept\", you consent to the collection and processing of your data."
+msgstr ""
+
+#: includes/class-ofac-chatbot.php
+msgid "Sorry, an error occurred. Please try again."
+msgstr ""
+
+#: includes/class-ofac-chatbot.php
+msgid "Conversation cleared."
+msgstr ""
+
+#: includes/class-ofac-chatbot.php
+msgid "Unknown command. Type /help for available commands."
+msgstr ""
+
+#: includes/class-ofac-chatbot.php
+msgid "Available commands:"
+msgstr ""
+
+#: admin/class-ofac-admin.php
+msgid "AnythingLLM Chatbot"
+msgstr ""
+
+#: admin/class-ofac-admin.php
+msgid "Chatbot"
+msgstr ""
+
+#: admin/class-ofac-admin.php
+msgid "Settings"
+msgstr ""
+
+#: admin/class-ofac-admin.php
+msgid "Logs"
+msgstr ""
+
+#: admin/class-ofac-admin.php
+msgid "Statistics"
+msgstr ""
+
+#: admin/class-ofac-admin.php
+msgid "GDPR"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "API Configuration"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "API URL"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "The URL of your AnythingLLM instance (e.g., https://your-instance.anythingllm.com)"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "API Key"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Your AnythingLLM API key"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Workspace Slug"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "The slug of the workspace to use for chat"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Request Timeout"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Timeout in seconds for API requests"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Enable Streaming"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Enable Server-Sent Events (SSE) for real-time responses"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Test Connection"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "General Settings"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Enable Chatbot"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Enable or disable the chatbot on your site"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Chatbot Title"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "The title displayed in the chatbot header"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Welcome Message"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "The message displayed when the chatbot opens"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Input Placeholder"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Placeholder text for the message input"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Appearance"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Position"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Position of the chatbot on the page"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Bottom Right"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Bottom Left"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Top Right"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Top Left"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Theme"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Light"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Dark"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Auto (System)"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Primary Color"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "The main accent color of the chatbot"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Bot Avatar"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Avatar image for bot messages"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "User Avatar"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Avatar image for user messages"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Messages"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Max Message Length"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Maximum number of characters per message"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "File Upload"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Enable File Upload"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Allow users to upload files"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Max File Size (MB)"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Maximum file size in megabytes"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Allowed File Types"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Comma-separated list of allowed file extensions"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Security"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Rate Limit"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Maximum requests per minute per user"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Enable Honeypot"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Enable honeypot field to prevent spam"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Privacy"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Require Consent"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Require user consent before using the chatbot"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Consent Text"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Text displayed in the consent dialog"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Privacy Policy URL"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "URL to your privacy policy page"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Data Retention (days)"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Number of days to retain conversation data"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Accessibility"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Enable Skip Link"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Add a skip link for keyboard navigation"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Enable Focus Trap"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Trap focus inside the chatbot when open"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Reduced Motion"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Respect prefers-reduced-motion setting"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Cache"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Enable Cache"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Cache API responses for faster repeated queries"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Cache Duration (minutes)"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "How long to cache responses"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Save Settings"
+msgstr ""
+
+#: admin/class-ofac-admin-settings.php
+msgid "Settings saved successfully."
+msgstr ""
+
+#: admin/class-ofac-admin-logs.php
+msgid "Conversation Logs"
+msgstr ""
+
+#: admin/class-ofac-admin-logs.php
+msgid "ID"
+msgstr ""
+
+#: admin/class-ofac-admin-logs.php
+msgid "Session"
+msgstr ""
+
+#: admin/class-ofac-admin-logs.php
+msgid "User"
+msgstr ""
+
+#: admin/class-ofac-admin-logs.php
+msgid "Messages"
+msgstr ""
+
+#: admin/class-ofac-admin-logs.php
+msgid "Started"
+msgstr ""
+
+#: admin/class-ofac-admin-logs.php
+msgid "Actions"
+msgstr ""
+
+#: admin/class-ofac-admin-logs.php
+msgid "View"
+msgstr ""
+
+#: admin/class-ofac-admin-logs.php
+msgid "Delete"
+msgstr ""
+
+#: admin/class-ofac-admin-logs.php
+msgid "No conversations found."
+msgstr ""
+
+#: admin/class-ofac-admin-stats.php
+msgid "Statistics"
+msgstr ""
+
+#: admin/class-ofac-admin-stats.php
+msgid "Total Conversations"
+msgstr ""
+
+#: admin/class-ofac-admin-stats.php
+msgid "Total Messages"
+msgstr ""
+
+#: admin/class-ofac-admin-stats.php
+msgid "Average Response Time"
+msgstr ""
+
+#: admin/class-ofac-admin-stats.php
+msgid "Error Rate"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "GDPR Tools"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "Export User Data"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "Export all data associated with a user"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "User ID or Email"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "Export"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "Delete User Data"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "Permanently delete all data associated with a user"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "Delete"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "Cleanup Expired Data"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "Remove all data that has exceeded the retention period"
+msgstr ""
+
+#: admin/class-ofac-admin-gdpr.php
+msgid "Run Cleanup"
+msgstr ""
+
+#: templates/chatbot.php
+msgid "Chat with us"
+msgstr ""
+
+#: templates/chatbot.php
+msgid "Type your message..."
+msgstr ""
+
+#: templates/chatbot.php
+msgid "Send"
+msgstr ""
+
+#: templates/chatbot.php
+msgid "Accept"
+msgstr ""
+
+#: templates/chatbot.php
+msgid "Decline"
+msgstr ""
+
+#: templates/chatbot.php
+msgid "Privacy Notice"
+msgstr ""
+
+#: public/class-ofac-shortcode.php
+msgid "Invalid shortcode attributes."
+msgstr ""
+
+#: public/class-ofac-block.php
+msgid "AnythingLLM Chatbot Block"
+msgstr ""
+
+#: public/class-ofac-block.php
+msgid "Add an AI chatbot powered by AnythingLLM to your page."
+msgstr ""
