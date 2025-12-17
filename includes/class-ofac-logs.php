@@ -17,6 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class OFAC_Logs {
 
     /**
+     * Single instance
+     *
+     * @var OFAC_Logs|null
+     */
+    private static $instance = null;
+
+    /**
      * Settings instance
      *
      * @var OFAC_Settings
@@ -24,9 +31,21 @@ class OFAC_Logs {
     private $settings;
 
     /**
+     * Get single instance
+     *
+     * @return OFAC_Logs
+     */
+    public static function get_instance() {
+        if ( null === self::$instance ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    /**
      * Constructor
      */
-    public function __construct() {
+    private function __construct() {
         $this->settings = OFAC_Settings::get_instance();
         $this->init_hooks();
     }
@@ -165,47 +184,39 @@ class OFAC_Logs {
     /**
      * Get conversations with pagination
      *
-     * @param array $args Query arguments
+     * @param int    $page     Current page number.
+     * @param int    $per_page Items per page.
+     * @param array  $filters  Optional filters (search, user_id, date_from, date_to).
+     * @param string $orderby  Order by column.
+     * @param string $order    Order direction (ASC/DESC).
      * @return array
      */
-    public function get_conversations( $args = array() ) {
+    public function get_conversations( $page = 1, $per_page = 20, $filters = array(), $orderby = 'started_at', $order = 'DESC' ) {
         global $wpdb;
 
-        $defaults = array(
-            'per_page' => 20,
-            'page'     => 1,
-            'orderby'  => 'started_at',
-            'order'    => 'DESC',
-            'search'   => '',
-            'user_id'  => null,
-            'date_from' => null,
-            'date_to'   => null,
-        );
-
-        $args   = wp_parse_args( $args, $defaults );
-        $offset = ( $args['page'] - 1 ) * $args['per_page'];
+        $offset = ( $page - 1 ) * $per_page;
 
         $where = array( '1=1' );
         $values = array();
 
-        if ( ! empty( $args['user_id'] ) ) {
+        if ( ! empty( $filters['user_id'] ) ) {
             $where[]  = 'c.user_id = %d';
-            $values[] = $args['user_id'];
+            $values[] = $filters['user_id'];
         }
 
-        if ( ! empty( $args['date_from'] ) ) {
+        if ( ! empty( $filters['date_from'] ) ) {
             $where[]  = 'c.started_at >= %s';
-            $values[] = $args['date_from'] . ' 00:00:00';
+            $values[] = $filters['date_from'] . ' 00:00:00';
         }
 
-        if ( ! empty( $args['date_to'] ) ) {
+        if ( ! empty( $filters['date_to'] ) ) {
             $where[]  = 'c.started_at <= %s';
-            $values[] = $args['date_to'] . ' 23:59:59';
+            $values[] = $filters['date_to'] . ' 23:59:59';
         }
 
-        if ( ! empty( $args['search'] ) ) {
+        if ( ! empty( $filters['search'] ) ) {
             $where[]  = '(c.session_id LIKE %s OR m.content LIKE %s)';
-            $search   = '%' . $wpdb->esc_like( $args['search'] ) . '%';
+            $search   = '%' . $wpdb->esc_like( $filters['search'] ) . '%';
             $values[] = $search;
             $values[] = $search;
         }
@@ -213,43 +224,56 @@ class OFAC_Logs {
         $where_sql = implode( ' AND ', $where );
 
         // Whitelist orderby
-        $allowed_orderby = array( 'started_at', 'message_count' );
-        $orderby         = in_array( $args['orderby'], $allowed_orderby, true ) ? $args['orderby'] : 'started_at';
-        $order           = strtoupper( $args['order'] ) === 'ASC' ? 'ASC' : 'DESC';
+        $allowed_orderby = array( 'started_at', 'message_count', 'id' );
+        $orderby         = in_array( $orderby, $allowed_orderby, true ) ? $orderby : 'started_at';
+        $order           = strtoupper( $order ) === 'ASC' ? 'ASC' : 'DESC';
 
-        $values[] = $args['per_page'];
+        // Build SQL for conversations
+        $sql = "SELECT c.*
+                FROM {$wpdb->prefix}ofac_conversations c";
+
+        // Only join messages if search is used
+        if ( ! empty( $filters['search'] ) ) {
+            $sql .= " LEFT JOIN {$wpdb->prefix}ofac_messages m ON c.id = m.conversation_id";
+        }
+
+        $sql .= " WHERE {$where_sql}
+                  GROUP BY c.id
+                  ORDER BY c.{$orderby} {$order}
+                  LIMIT %d OFFSET %d";
+
+        $values[] = $per_page;
         $values[] = $offset;
 
-        $sql = "SELECT c.*, u.display_name as user_name 
-                FROM {$wpdb->prefix}ofac_conversations c 
-                LEFT JOIN {$wpdb->users} u ON c.user_id = u.ID 
-                LEFT JOIN {$wpdb->prefix}ofac_messages m ON c.id = m.conversation_id 
-                WHERE {$where_sql} 
-                GROUP BY c.id 
-                ORDER BY c.{$orderby} {$order} 
-                LIMIT %d OFFSET %d";
-
-        $conversations = $wpdb->get_results(
-            $wpdb->prepare( $sql, ...$values ),
-            ARRAY_A
-        );
+        if ( ! empty( $values ) ) {
+            $conversations = $wpdb->get_results(
+                $wpdb->prepare( $sql, ...$values )
+            );
+        } else {
+            $conversations = $wpdb->get_results( $sql );
+        }
 
         // Get total count
-        $count_values = array_slice( $values, 0, -2 );
-        $count_sql = "SELECT COUNT(DISTINCT c.id) 
-                      FROM {$wpdb->prefix}ofac_conversations c 
-                      LEFT JOIN {$wpdb->prefix}ofac_messages m ON c.id = m.conversation_id 
-                      WHERE {$where_sql}";
+        $count_sql = "SELECT COUNT(DISTINCT c.id)
+                      FROM {$wpdb->prefix}ofac_conversations c";
 
-        $total = empty( $count_values ) 
-            ? $wpdb->get_var( $count_sql ) 
-            : $wpdb->get_var( $wpdb->prepare( $count_sql, ...$count_values ) );
+        if ( ! empty( $filters['search'] ) ) {
+            $count_sql .= " LEFT JOIN {$wpdb->prefix}ofac_messages m ON c.id = m.conversation_id";
+        }
+
+        $count_sql .= " WHERE {$where_sql}";
+
+        // Remove LIMIT and OFFSET from values for count query
+        $count_values = array_slice( $values, 0, -2 );
+
+        $total = empty( $count_values )
+            ? (int) $wpdb->get_var( $count_sql )
+            : (int) $wpdb->get_var( $wpdb->prepare( $count_sql, ...$count_values ) );
 
         return array(
-            'conversations' => $conversations,
-            'total'         => (int) $total,
-            'pages'         => ceil( $total / $args['per_page'] ),
-            'current_page'  => $args['page'],
+            'items' => $conversations,
+            'total' => $total,
+            'pages' => ceil( $total / $per_page ),
         );
     }
 
@@ -264,12 +288,11 @@ class OFAC_Logs {
 
         return $wpdb->get_results(
             $wpdb->prepare(
-                "SELECT * FROM {$wpdb->prefix}ofac_messages 
-                WHERE conversation_id = %d 
+                "SELECT * FROM {$wpdb->prefix}ofac_messages
+                WHERE conversation_id = %d
                 ORDER BY created_at ASC",
                 $conversation_id
-            ),
-            ARRAY_A
+            )
         );
     }
 

@@ -17,6 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class OFAC_GDPR {
 
     /**
+     * Single instance
+     *
+     * @var OFAC_GDPR|null
+     */
+    private static $instance = null;
+
+    /**
      * Settings instance
      *
      * @var OFAC_Settings
@@ -24,9 +31,21 @@ class OFAC_GDPR {
     private $settings;
 
     /**
+     * Get single instance
+     *
+     * @return OFAC_GDPR
+     */
+    public static function get_instance() {
+        if ( null === self::$instance ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    /**
      * Constructor
      */
-    public function __construct() {
+    private function __construct() {
         $this->settings = OFAC_Settings::get_instance();
         $this->init_hooks();
     }
@@ -53,6 +72,8 @@ class OFAC_GDPR {
 
     /**
      * Cleanup expired data
+     *
+     * @return int Number of conversations deleted
      */
     public function cleanup_expired_data() {
         global $wpdb;
@@ -68,6 +89,8 @@ class OFAC_GDPR {
             )
         );
 
+        $deleted_count = 0;
+
         if ( ! empty( $old_conversations ) ) {
             $ids_placeholder = implode( ',', array_fill( 0, count( $old_conversations ), '%d' ) );
 
@@ -82,9 +105,9 @@ class OFAC_GDPR {
             // Delete feedback
             $wpdb->query(
                 $wpdb->prepare(
-                    "DELETE FROM {$wpdb->prefix}ofac_feedback 
+                    "DELETE FROM {$wpdb->prefix}ofac_feedback
                     WHERE message_id IN (
-                        SELECT id FROM {$wpdb->prefix}ofac_messages 
+                        SELECT id FROM {$wpdb->prefix}ofac_messages
                         WHERE conversation_id IN ({$ids_placeholder})
                     )",
                     ...$old_conversations
@@ -98,6 +121,8 @@ class OFAC_GDPR {
                     ...$old_conversations
                 )
             );
+
+            $deleted_count = count( $old_conversations );
         }
 
         // Delete expired consents
@@ -115,7 +140,9 @@ class OFAC_GDPR {
          * @param string $cutoff_date Cutoff date
          * @param int    $deleted     Number of conversations deleted
          */
-        do_action( 'ofac_gdpr_cleanup', $cutoff_date, count( $old_conversations ) );
+        do_action( 'ofac_gdpr_cleanup', $cutoff_date, $deleted_count );
+
+        return $deleted_count;
     }
 
     /**

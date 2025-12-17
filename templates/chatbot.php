@@ -90,13 +90,26 @@ if ( ! defined( 'ABSPATH' ) ) {
                         <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
                     </svg>
                 </button>
-                <button type="button" 
+                <button type="button"
                         id="ofac-reset"
                         class="ofac-header-btn ofac-btn-reset"
                         aria-label="<?php echo esc_attr( $accessibility->get_label( 'reset_chat' ) ); ?>"
                         title="<?php esc_attr_e( 'Réinitialiser', 'anythingllm-chatbot' ); ?>">
                     <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
                         <path d="M17.65 6.35A7.958 7.958 0 0012 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0112 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                    </svg>
+                </button>
+                <button type="button"
+                        id="ofac-fullscreen"
+                        class="ofac-header-btn ofac-btn-fullscreen"
+                        aria-label="<?php esc_attr_e( 'Plein écran', 'anythingllm-chatbot' ); ?>"
+                        aria-pressed="false"
+                        title="<?php esc_attr_e( 'Plein écran', 'anythingllm-chatbot' ); ?>">
+                    <svg class="ofac-fullscreen-expand" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                        <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/>
+                    </svg>
+                    <svg class="ofac-fullscreen-compress" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                        <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/>
                     </svg>
                 </button>
                 <?php if ( ! $inline ) : ?>
@@ -282,16 +295,6 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <button type="button" class="ofac-action-btn ofac-copy-btn" aria-label="<?php echo esc_attr( $accessibility->get_label( 'copy' ) ); ?>">
                     <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
                         <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                    </svg>
-                </button>
-                <button type="button" class="ofac-action-btn ofac-feedback-btn ofac-feedback-up" aria-label="<?php esc_attr_e( 'Utile', 'anythingllm-chatbot' ); ?>" data-rating="1">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
-                        <path d="M1 21h4V9H1v12zm22-11c0-1.1-.9-2-2-2h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 1 7.59 7.59C7.22 7.95 7 8.45 7 9v10c0 1.1.9 2 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73v-2z"/>
-                    </svg>
-                </button>
-                <button type="button" class="ofac-action-btn ofac-feedback-btn ofac-feedback-down" aria-label="<?php esc_attr_e( 'Pas utile', 'anythingllm-chatbot' ); ?>" data-rating="-1">
-                    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">
-                        <path d="M15 3H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5c0-1.1-.9-2-2-2zm4 0v12h4V3h-4z"/>
                     </svg>
                 </button>
             </div>

@@ -202,16 +202,16 @@ final class OFAC_Plugin {
         $this->cache = new OFAC_Cache();
 
         // Initialize stats
-        $this->stats = new OFAC_Stats();
+        $this->stats = OFAC_Stats::get_instance();
 
         // Initialize rate limiter
         new OFAC_Rate_Limiter();
 
         // Initialize GDPR handler
-        new OFAC_GDPR();
+        OFAC_GDPR::get_instance();
 
         // Initialize logs
-        new OFAC_Logs();
+        OFAC_Logs::get_instance();
 
         // Initialize admin
         if ( is_admin() ) {

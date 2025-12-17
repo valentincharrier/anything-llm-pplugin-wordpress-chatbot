@@ -242,7 +242,8 @@ class OFAC_Admin_GDPR {
         }
 
         $gdpr = OFAC_GDPR::get_instance();
-        $data = $gdpr->get_user_data( $session_id, $user_id );
+        $identifier = $user_id ? $user_id : $session_id;
+        $data = $gdpr->get_user_data( $identifier );
 
         if ( empty( $data['conversations'] ) ) {
             wp_send_json_error( __( 'Aucune donnée trouvée.', 'anythingllm-chatbot' ) );
@@ -276,7 +277,8 @@ class OFAC_Admin_GDPR {
         $session_id = isset( $_POST['session_id'] ) ? sanitize_text_field( $_POST['session_id'] ) : '';
 
         $gdpr = OFAC_GDPR::get_instance();
-        $data = $gdpr->get_user_data( $session_id, $user_id );
+        $identifier = $user_id ? $user_id : $session_id;
+        $data = $gdpr->get_user_data( $identifier );
 
         $filename = 'ofac-data-export-' . date( 'Y-m-d-His' ) . '.json';
 
@@ -300,12 +302,13 @@ class OFAC_Admin_GDPR {
         $session_id = isset( $_POST['session_id'] ) ? sanitize_text_field( $_POST['session_id'] ) : '';
 
         $gdpr = OFAC_GDPR::get_instance();
-        $result = $gdpr->erase_user_data( $session_id, $user_id );
+        $identifier = $user_id ? $user_id : $session_id;
+        $deleted = $gdpr->erase_user_data( $identifier );
 
-        if ( $result['items_removed'] > 0 ) {
+        if ( $deleted > 0 ) {
             wp_send_json_success( sprintf(
                 __( '%d éléments supprimés.', 'anythingllm-chatbot' ),
-                $result['items_removed']
+                $deleted
             ) );
         } else {
             wp_send_json_error( __( 'Aucune donnée à supprimer.', 'anythingllm-chatbot' ) );

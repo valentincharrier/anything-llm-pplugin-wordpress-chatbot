@@ -17,6 +17,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 class OFAC_Stats {
 
     /**
+     * Single instance
+     *
+     * @var OFAC_Stats|null
+     */
+    private static $instance = null;
+
+    /**
      * Today's stats transient key
      *
      * @var string
@@ -24,9 +31,21 @@ class OFAC_Stats {
     const TODAY_KEY = 'ofac_stats_today';
 
     /**
+     * Get single instance
+     *
+     * @return OFAC_Stats
+     */
+    public static function get_instance() {
+        if ( null === self::$instance ) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    /**
      * Constructor
      */
-    public function __construct() {
+    private function __construct() {
         add_action( 'ofac_daily_stats', array( $this, 'save_daily_stats' ) );
 
         // Schedule daily stats save
@@ -225,15 +244,13 @@ class OFAC_Stats {
     }
 
     /**
-     * Get summary stats
+     * Get summary stats for a date range
      *
-     * @param int $days Number of days
+     * @param string $start Start date (Y-m-d).
+     * @param string $end   End date (Y-m-d).
      * @return array
      */
-    public function get_summary( $days = 30 ) {
-        $end   = date( 'Y-m-d' );
-        $start = date( 'Y-m-d', strtotime( "-{$days} days" ) );
-
+    public function get_summary( $start, $end ) {
         $stats = $this->get_range( $start, $end );
 
         $summary = array(
@@ -252,12 +269,12 @@ class OFAC_Stats {
         $response_times = array();
 
         foreach ( $stats as $day ) {
-            $summary['total_conversations'] += $day['conversations'];
-            $summary['total_messages']      += $day['messages'];
-            $summary['total_errors']        += $day['errors'];
+            $summary['total_conversations'] += isset( $day['conversations'] ) ? (int) $day['conversations'] : 0;
+            $summary['total_messages']      += isset( $day['messages'] ) ? (int) $day['messages'] : 0;
+            $summary['total_errors']        += isset( $day['errors'] ) ? (int) $day['errors'] : 0;
 
-            if ( $day['avg_response_time'] > 0 ) {
-                $response_times[] = $day['avg_response_time'];
+            if ( isset( $day['avg_response_time'] ) && $day['avg_response_time'] > 0 ) {
+                $response_times[] = (float) $day['avg_response_time'];
             }
         }
 
@@ -270,7 +287,8 @@ class OFAC_Stats {
             $summary['error_rate'] = ( $summary['total_errors'] / $summary['total_messages'] ) * 100;
         }
 
-        $summary['daily_average'] = $summary['total_conversations'] / count( $stats );
+        $days_count = max( 1, count( $stats ) );
+        $summary['daily_average'] = $summary['total_conversations'] / $days_count;
 
         return $summary;
     }
@@ -278,20 +296,27 @@ class OFAC_Stats {
     /**
      * Get chart data for visualization
      *
-     * @param int $days Number of days
+     * @param string $start Start date (Y-m-d).
+     * @param string $end   End date (Y-m-d).
      * @return array
      */
-    public function get_chart_data( $days = 30 ) {
-        $end   = date( 'Y-m-d' );
-        $start = date( 'Y-m-d', strtotime( "-{$days} days" ) );
-
+    public function get_chart_data( $start, $end ) {
         $stats = $this->get_range( $start, $end );
+
+        // Index stats by date for easy lookup
+        $stats_by_date = array();
+        foreach ( $stats as $day ) {
+            if ( isset( $day['date'] ) ) {
+                $stats_by_date[ $day['date'] ] = $day;
+            }
+        }
 
         $chart_data = array(
             'labels'        => array(),
             'conversations' => array(),
             'messages'      => array(),
             'errors'        => array(),
+            'response_time' => array(),
         );
 
         // Create array with all dates
@@ -300,24 +325,40 @@ class OFAC_Stats {
 
         while ( $current <= $end_ts ) {
             $date = date( 'Y-m-d', $current );
-            $chart_data['labels'][]        = date( 'd/m', $current );
-            $chart_data['conversations'][] = 0;
-            $chart_data['messages'][]      = 0;
-            $chart_data['errors'][]        = 0;
+            $chart_data['labels'][] = date( 'd/m', $current );
+
+            if ( isset( $stats_by_date[ $date ] ) ) {
+                $day_data = $stats_by_date[ $date ];
+                $chart_data['conversations'][] = isset( $day_data['conversations'] ) ? (int) $day_data['conversations'] : 0;
+                $chart_data['messages'][]      = isset( $day_data['messages'] ) ? (int) $day_data['messages'] : 0;
+                $chart_data['errors'][]        = isset( $day_data['errors'] ) ? (int) $day_data['errors'] : 0;
+                $chart_data['response_time'][] = isset( $day_data['avg_response_time'] ) ? (float) $day_data['avg_response_time'] : 0;
+            } else {
+                $chart_data['conversations'][] = 0;
+                $chart_data['messages'][]      = 0;
+                $chart_data['errors'][]        = 0;
+                $chart_data['response_time'][] = 0;
+            }
 
             $current = strtotime( '+1 day', $current );
         }
 
-        // Fill in actual data
-        foreach ( $stats as $day ) {
-            $index = array_search( date( 'd/m', strtotime( $day['date'] ) ), $chart_data['labels'] );
-            if ( $index !== false ) {
-                $chart_data['conversations'][ $index ] = $day['conversations'];
-                $chart_data['messages'][ $index ]      = $day['messages'];
-                $chart_data['errors'][ $index ]        = $day['errors'];
-            }
-        }
-
         return $chart_data;
+    }
+
+    /**
+     * Get today's stats for display
+     *
+     * @return array
+     */
+    public function get_today() {
+        $today_stats = self::get_today_stats();
+
+        return array(
+            'conversations'     => isset( $today_stats['conversations'] ) ? (int) $today_stats['conversations'] : 0,
+            'messages'          => isset( $today_stats['messages'] ) ? (int) $today_stats['messages'] : 0,
+            'errors'            => isset( $today_stats['errors'] ) ? (int) $today_stats['errors'] : 0,
+            'avg_response_time' => isset( $today_stats['avg_response_time'] ) ? (float) $today_stats['avg_response_time'] : 0,
+        );
     }
 }

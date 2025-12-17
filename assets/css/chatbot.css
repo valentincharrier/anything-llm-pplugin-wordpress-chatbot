@@ -1916,3 +1916,108 @@
 	box-shadow: none !important;
 }
 /********* Fin lien accès rapide chatbot **/
+
+/* ==========================================================================
+   Fullscreen Mode
+   ========================================================================== */
+
+/* Fullscreen button icon toggle */
+.ofac-btn-fullscreen .ofac-fullscreen-expand {
+    display: block !important;
+}
+
+.ofac-btn-fullscreen .ofac-fullscreen-compress {
+    display: none !important;
+}
+
+.ofac-modal--fullscreen .ofac-btn-fullscreen .ofac-fullscreen-expand {
+    display: none !important;
+}
+
+.ofac-modal--fullscreen .ofac-btn-fullscreen .ofac-fullscreen-compress {
+    display: block !important;
+}
+
+/* Fullscreen modal styles */
+.ofac-modal--fullscreen,
+.ofac-chat-window.ofac-modal--fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100% !important;
+    max-height: 100% !important;
+    border-radius: 0 !important;
+    z-index: calc(var(--ofac-z-modal) + 10);
+    transform: none !important;
+}
+
+.ofac-modal--fullscreen.ofac-modal--open {
+    transform: none !important;
+}
+
+/* Fullscreen messages area - more space */
+.ofac-modal--fullscreen .ofac-messages {
+    padding: var(--ofac-spacing-lg) var(--ofac-spacing-xl);
+}
+
+/* Fullscreen message bubbles - wider */
+.ofac-modal--fullscreen .ofac-message {
+    max-width: 70%;
+}
+
+@media (min-width: 1200px) {
+    .ofac-modal--fullscreen .ofac-message {
+        max-width: 60%;
+    }
+}
+
+/* Input wrapper - take full available width */
+.ofac-input-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--ofac-spacing-sm);
+    background: var(--ofac-bg-secondary);
+    border: 1px solid var(--ofac-border);
+    border-radius: var(--ofac-radius-lg);
+    padding: var(--ofac-spacing-sm);
+    transition: border-color var(--ofac-transition), box-shadow var(--ofac-transition);
+    width: 100%;
+    flex: 1;
+}
+
+/* Fullscreen input area */
+.ofac-modal--fullscreen .ofac-input-form {
+    padding: var(--ofac-spacing-md) var(--ofac-spacing-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.ofac-modal--fullscreen .ofac-input-wrapper {
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Hide trigger button when in fullscreen */
+.ofac-chatbot.ofac-fullscreen-active .ofac-trigger {
+    display: none !important;
+}
+
+/* Fullscreen transition */
+.ofac-modal {
+    transition: opacity var(--ofac-transition-slow),
+                transform var(--ofac-transition-slow),
+                visibility var(--ofac-transition-slow),
+                width var(--ofac-transition-slow),
+                height var(--ofac-transition-slow),
+                top var(--ofac-transition-slow),
+                left var(--ofac-transition-slow),
+                right var(--ofac-transition-slow),
+                bottom var(--ofac-transition-slow),
+                border-radius var(--ofac-transition-slow);
+}

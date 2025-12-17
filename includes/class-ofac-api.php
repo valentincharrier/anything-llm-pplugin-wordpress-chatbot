@@ -348,6 +348,10 @@ class OFAC_API {
             'sessionId' => $session_id,
         );
 
+        // Accumulate response text for logging
+        $accumulated_response = '';
+        $start_time = microtime( true );
+
         $ch = curl_init();
         curl_setopt( $ch, CURLOPT_URL, $url );
         curl_setopt( $ch, CURLOPT_POST, true );
@@ -359,19 +363,43 @@ class OFAC_API {
         ) );
         curl_setopt( $ch, CURLOPT_TIMEOUT, $this->timeout );
         curl_setopt( $ch, CURLOPT_RETURNTRANSFER, false );
-        curl_setopt( $ch, CURLOPT_WRITEFUNCTION, function( $ch, $data ) {
+        curl_setopt( $ch, CURLOPT_WRITEFUNCTION, function( $ch, $data ) use ( &$accumulated_response ) {
             echo $data;
             flush();
+
+            // Parse SSE data to extract text chunks for logging
+            $lines = explode( "\n", $data );
+            foreach ( $lines as $line ) {
+                if ( strpos( $line, 'data: ' ) === 0 ) {
+                    $json_str = substr( $line, 6 );
+                    $json_data = json_decode( $json_str, true );
+                    if ( $json_data && isset( $json_data['textResponse'] ) ) {
+                        $accumulated_response .= $json_data['textResponse'];
+                    }
+                }
+            }
+
             return strlen( $data );
         } );
 
         $result = curl_exec( $ch );
+        $has_error = curl_errno( $ch );
 
-        if ( curl_errno( $ch ) ) {
+        if ( $has_error ) {
             $this->send_sse_error( curl_error( $ch ) );
+            OFAC_Stats::increment_errors();
         }
 
         curl_close( $ch );
+
+        // Log conversation after streaming completes
+        if ( ! $has_error && ! empty( $accumulated_response ) ) {
+            $this->log_conversation( $message, array( 'text' => $accumulated_response ), $session_id );
+
+            // Update stats
+            OFAC_Stats::increment_messages();
+            OFAC_Stats::update_response_time( microtime( true ) - $start_time );
+        }
 
         // Send done event
         echo "event: done\n";
@@ -459,7 +487,7 @@ class OFAC_API {
             return;
         }
 
-        $logs = new OFAC_Logs();
+        $logs = OFAC_Logs::get_instance();
         $logs->log_message( $session_id, 'user', $message );
         $logs->log_message( $session_id, 'assistant', $response['text'] );
     }

@@ -21,6 +21,7 @@
         constructor() {
             this.config = ofacConfig;
             this.isOpen = false;
+            this.isFullscreen = false;
             this.isTyping = false;
             this.conversationHistory = [];
             this.sessionId = this.getOrCreateSessionId();
@@ -115,7 +116,8 @@
                 consentDecline: document.getElementById('ofac-consent-decline'),
                 quickReplies: document.getElementById('ofac-quick-replies'),
                 exportBtn: document.getElementById('ofac-export'),
-                resetBtn: document.getElementById('ofac-reset')
+                resetBtn: document.getElementById('ofac-reset'),
+                fullscreenBtn: document.getElementById('ofac-fullscreen')
             };
         }
 
@@ -199,6 +201,11 @@
                 this.elements.resetBtn.addEventListener('click', () => this.resetConversation());
             }
 
+            // Fullscreen
+            if (this.elements.fullscreenBtn) {
+                this.elements.fullscreenBtn.addEventListener('click', () => this.toggleFullscreen());
+            }
+
             // Événements globaux
             document.addEventListener('keydown', this.handleKeyDown);
             window.addEventListener('resize', this.handleResize);
@@ -231,9 +238,13 @@
          * Gestion des touches clavier
          */
         handleKeyDown(e) {
-            // Échap pour fermer
+            // Échap pour fermer ou quitter le fullscreen
             if (e.key === 'Escape' && this.isOpen) {
-                this.close();
+                if (this.isFullscreen) {
+                    this.toggleFullscreen();
+                } else {
+                    this.close();
+                }
             }
 
             // Tab pour focus trap
@@ -359,6 +370,20 @@
 
             this.isOpen = false;
 
+            // Quitter le mode fullscreen si actif
+            if (this.isFullscreen) {
+                this.isFullscreen = false;
+                if (this.elements.modal) {
+                    this.elements.modal.classList.remove('ofac-modal--fullscreen');
+                }
+                if (this.elements.container) {
+                    this.elements.container.classList.remove('ofac-fullscreen-active');
+                }
+                if (this.elements.fullscreenBtn) {
+                    this.elements.fullscreenBtn.setAttribute('aria-pressed', 'false');
+                }
+            }
+
             if (this.elements.modal) {
                 this.elements.modal.classList.remove('ofac-modal--open');
                 this.elements.modal.setAttribute('aria-hidden', 'true');
@@ -382,6 +407,41 @@
             }
 
             this.trigger('ofac:close');
+        }
+
+        /**
+         * Basculer le mode plein écran
+         */
+        toggleFullscreen() {
+            this.isFullscreen = !this.isFullscreen;
+
+            if (this.elements.modal) {
+                this.elements.modal.classList.toggle('ofac-modal--fullscreen', this.isFullscreen);
+            }
+
+            if (this.elements.container) {
+                this.elements.container.classList.toggle('ofac-fullscreen-active', this.isFullscreen);
+            }
+
+            if (this.elements.fullscreenBtn) {
+                this.elements.fullscreenBtn.setAttribute('aria-pressed', this.isFullscreen ? 'true' : 'false');
+                this.elements.fullscreenBtn.setAttribute('title', this.isFullscreen
+                    ? (this.config.labels.exit_fullscreen || 'Quitter le plein écran')
+                    : (this.config.labels.fullscreen || 'Plein écran')
+                );
+                this.elements.fullscreenBtn.setAttribute('aria-label', this.isFullscreen
+                    ? (this.config.labels.exit_fullscreen || 'Quitter le plein écran')
+                    : (this.config.labels.fullscreen || 'Plein écran')
+                );
+            }
+
+            // Annoncer aux lecteurs d'écran
+            this.announce(this.isFullscreen
+                ? (this.config.labels.fullscreen_enabled || 'Mode plein écran activé')
+                : (this.config.labels.fullscreen_disabled || 'Mode plein écran désactivé')
+            );
+
+            this.trigger('ofac:fullscreen', { isFullscreen: this.isFullscreen });
         }
 
         /**
@@ -829,10 +889,6 @@
                                     this.updateMessageContent(contentElement, fullContent, true);
                                 }
 
-                                if (parsed.sources) {
-                                    this.addSourcesToMessage(messageElement, parsed.sources);
-                                }
-
                                 if (parsed.suggestedQuestions) {
                                     this.showQuickReplies(parsed.suggestedQuestions);
                                 }
@@ -966,10 +1022,17 @@
             div.className = `ofac-message ofac-message--${message.role}`;
             div.setAttribute('role', 'article');
 
-            // Avatar with fallback
-            const avatarUrl = message.role === 'user' 
-                ? this.config.settings.user_avatar 
-                : this.config.settings.bot_avatar;
+            // Avatar with fallback (use _url suffix for actual URL)
+            // Check for URL format (starts with http, https, or /)
+            const getUserAvatarUrl = () => {
+                const url = this.config.settings.user_avatar_url || this.config.settings.user_avatar;
+                return url && (url.startsWith('http') || url.startsWith('/')) ? url : null;
+            };
+            const getBotAvatarUrl = () => {
+                const url = this.config.settings.bot_avatar_url || this.config.settings.bot_avatar;
+                return url && (url.startsWith('http') || url.startsWith('/')) ? url : null;
+            };
+            const avatarUrl = message.role === 'user' ? getUserAvatarUrl() : getBotAvatarUrl();
 
             // Default avatar SVG
             const defaultAvatarSvg = `<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
@@ -996,7 +1059,6 @@
                         <time class="ofac-message__time" datetime="${message.timestamp}">${timeFormatted}</time>
                         ${message.role === 'assistant' ? this.createMessageActions(message.id) : ''}
                     </div>
-                    ${message.sources ? this.createSourcesHtml(message.sources) : ''}
                 </div>
             `;
 
@@ -1014,26 +1076,12 @@
         createMessageActions(messageId) {
             return `
                 <div class="ofac-message__actions">
-                    <button type="button" class="ofac-message__action ofac-message__action--copy" 
+                    <button type="button" class="ofac-message__action ofac-message__action--copy"
                             data-action="copy" data-message-id="${messageId}"
                             aria-label="${this.config.labels.copy || 'Copier'}">
                         <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
                             <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                        </svg>
-                    </button>
-                    <button type="button" class="ofac-message__action ofac-message__action--thumbup" 
-                            data-action="thumbup" data-message-id="${messageId}"
-                            aria-label="${this.config.labels.helpful || 'Utile'}">
-                        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
-                        </svg>
-                    </button>
-                    <button type="button" class="ofac-message__action ofac-message__action--thumbdown" 
-                            data-action="thumbdown" data-message-id="${messageId}"
-                            aria-label="${this.config.labels.not_helpful || 'Pas utile'}">
-                        <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h2.67A2.31 2.31 0 0 1 22 4v7a2.31 2.31 0 0 1-2.33 2H17"></path>
                         </svg>
                     </button>
                 </div>
@@ -1045,19 +1093,9 @@
          */
         bindMessageActions(element, message) {
             const copyBtn = element.querySelector('[data-action="copy"]');
-            const thumbUpBtn = element.querySelector('[data-action="thumbup"]');
-            const thumbDownBtn = element.querySelector('[data-action="thumbdown"]');
 
             if (copyBtn) {
                 copyBtn.addEventListener('click', () => this.copyMessage(message));
-            }
-
-            if (thumbUpBtn) {
-                thumbUpBtn.addEventListener('click', (e) => this.rateMessage(message.id, 1, e.currentTarget));
-            }
-
-            if (thumbDownBtn) {
-                thumbDownBtn.addEventListener('click', (e) => this.rateMessage(message.id, -1, e.currentTarget));
             }
         }
 
