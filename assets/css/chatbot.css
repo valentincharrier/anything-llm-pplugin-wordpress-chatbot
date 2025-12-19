@@ -1629,6 +1629,10 @@
     caret-color: var(--ofac-primary);
 }
 
+#ofac-input:focus-visible {
+    border: none !important;
+}
+
 /* Send button focus */
 .ofac-send-btn:focus-visible,
 #ofac-send:focus-visible {
