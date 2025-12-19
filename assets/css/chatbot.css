@@ -120,6 +120,8 @@
     position: fixed;
     top: calc(100vh - 8.5rem);
     left: var(--ofac-spacing-lg);
+    width: 3rem;
+    height: 3rem;
 }
 
 .ofac-chatbot.ofac-position-top-right .ofac-trigger,
@@ -245,10 +247,24 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: var(--ofac-spacing-md) var(--ofac-spacing-lg);
+    width: 100%;
+    margin-left: 0;
+    gap: 1rem;
+    padding: 1rem;
+    flex-wrap: wrap;
     background: var(--ofac-primary);
     color: var(--ofac-text-inverse);
     flex-shrink: 0;
+}
+
+.ofac-chat-header h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: white;
+}
+
+.ofac-chat-header svg {
+    fill: white;
 }
 
 .ofac-header-info,
@@ -286,6 +302,7 @@
     display: flex;
     align-items: center;
     gap: 0.2rem;
+    min-width: 150px;
 }
 
 .ofac-header-btn,
@@ -612,7 +629,7 @@
 .ofac-trigger svg {
     width: 28px;
     height: 28px;
-    fill: currentColor;
+    fill: white;
 }
 
 /* Trigger Positions */
@@ -1429,9 +1446,11 @@
     cursor: not-allowed;
 }
 
-.ofac-send-btn svg {
+.ofac-send-btn svg,
+#ofac-send svg {
     width: 20px;
     height: 20px;
+    fill: white;
 }
 
 /* ==========================================================================
