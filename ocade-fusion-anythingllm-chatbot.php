@@ -425,7 +425,7 @@ final class OFAC_Plugin {
             'ofac_placeholder_text'     => 'Tapez votre message...',
             'ofac_max_chars'            => 5000,
             'ofac_max_file_size'        => 5,
-            'ofac_allowed_file_types'   => 'jpg,jpeg,png,gif,pdf,doc,docx,txt',
+            'ofac_allowed_file_types'   => array( 'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt' ),
             'ofac_rate_limit'           => 30,
             'ofac_cache_duration'       => 3600,
             'ofac_data_retention_days'  => 30,

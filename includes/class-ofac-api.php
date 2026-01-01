@@ -660,8 +660,12 @@ class OFAC_API {
         }
 
         // Check file type
-        $allowed_types = array_map( 'trim', explode( ',', $settings->get( 'ofac_allowed_file_types', 'jpg,jpeg,png,gif,pdf,doc,docx,txt' ) ) );
-        $file_ext      = strtolower( pathinfo( $file['name'], PATHINFO_EXTENSION ) );
+        $allowed_types = $settings->get( 'ofac_allowed_file_types', array( 'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt' ) );
+        // Handle legacy string format (migration)
+        if ( is_string( $allowed_types ) ) {
+            $allowed_types = array_map( 'trim', explode( ',', $allowed_types ) );
+        }
+        $file_ext = strtolower( pathinfo( $file['name'], PATHINFO_EXTENSION ) );
 
         if ( ! in_array( $file_ext, $allowed_types, true ) ) {
             wp_send_json_error( array( 'message' => __( 'Type de fichier non autorisé', 'anythingllm-chatbot' ) ), 400 );

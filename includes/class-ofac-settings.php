@@ -247,10 +247,56 @@ class OFAC_Settings {
                         'max'         => 50,
                     ),
                     'ofac_allowed_file_types' => array(
-                        'type'        => 'text',
+                        'type'        => 'multiselect',
                         'label'       => __( 'Types autorisés', 'anythingllm-chatbot' ),
-                        'description' => __( 'Extensions autorisées, séparées par des virgules', 'anythingllm-chatbot' ),
-                        'default'     => 'jpg,jpeg,png,gif,pdf,doc,docx,txt',
+                        'description' => __( 'Sélectionnez les extensions autorisées (Ctrl+clic ou Cmd+clic pour sélection multiple)', 'anythingllm-chatbot' ),
+                        'default'     => array( 'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt' ),
+                        'options'     => array(
+                            // Images
+                            'jpg'  => __( 'JPG - Image JPEG', 'anythingllm-chatbot' ),
+                            'jpeg' => __( 'JPEG - Image JPEG', 'anythingllm-chatbot' ),
+                            'png'  => __( 'PNG - Image PNG', 'anythingllm-chatbot' ),
+                            'gif'  => __( 'GIF - Image animée', 'anythingllm-chatbot' ),
+                            'webp' => __( 'WEBP - Image WebP', 'anythingllm-chatbot' ),
+                            'svg'  => __( 'SVG - Image vectorielle', 'anythingllm-chatbot' ),
+                            'bmp'  => __( 'BMP - Image Bitmap', 'anythingllm-chatbot' ),
+                            'ico'  => __( 'ICO - Icône', 'anythingllm-chatbot' ),
+                            // Documents
+                            'pdf'  => __( 'PDF - Document PDF', 'anythingllm-chatbot' ),
+                            'doc'  => __( 'DOC - Document Word', 'anythingllm-chatbot' ),
+                            'docx' => __( 'DOCX - Document Word', 'anythingllm-chatbot' ),
+                            'xls'  => __( 'XLS - Tableur Excel', 'anythingllm-chatbot' ),
+                            'xlsx' => __( 'XLSX - Tableur Excel', 'anythingllm-chatbot' ),
+                            'ppt'  => __( 'PPT - Présentation PowerPoint', 'anythingllm-chatbot' ),
+                            'pptx' => __( 'PPTX - Présentation PowerPoint', 'anythingllm-chatbot' ),
+                            'odt'  => __( 'ODT - Document OpenDocument', 'anythingllm-chatbot' ),
+                            'ods'  => __( 'ODS - Tableur OpenDocument', 'anythingllm-chatbot' ),
+                            'odp'  => __( 'ODP - Présentation OpenDocument', 'anythingllm-chatbot' ),
+                            // Texte
+                            'txt'  => __( 'TXT - Fichier texte', 'anythingllm-chatbot' ),
+                            'csv'  => __( 'CSV - Données tabulaires', 'anythingllm-chatbot' ),
+                            'rtf'  => __( 'RTF - Texte enrichi', 'anythingllm-chatbot' ),
+                            'md'   => __( 'MD - Markdown', 'anythingllm-chatbot' ),
+                            // Archives
+                            'zip'  => __( 'ZIP - Archive compressée', 'anythingllm-chatbot' ),
+                            'rar'  => __( 'RAR - Archive RAR', 'anythingllm-chatbot' ),
+                            '7z'   => __( '7Z - Archive 7-Zip', 'anythingllm-chatbot' ),
+                            // Audio
+                            'mp3'  => __( 'MP3 - Audio MP3', 'anythingllm-chatbot' ),
+                            'wav'  => __( 'WAV - Audio WAV', 'anythingllm-chatbot' ),
+                            'ogg'  => __( 'OGG - Audio OGG', 'anythingllm-chatbot' ),
+                            // Vidéo
+                            'mp4'  => __( 'MP4 - Vidéo MP4', 'anythingllm-chatbot' ),
+                            'webm' => __( 'WEBM - Vidéo WebM', 'anythingllm-chatbot' ),
+                            'avi'  => __( 'AVI - Vidéo AVI', 'anythingllm-chatbot' ),
+                            'mov'  => __( 'MOV - Vidéo QuickTime', 'anythingllm-chatbot' ),
+                            // Code
+                            'json' => __( 'JSON - Données JSON', 'anythingllm-chatbot' ),
+                            'xml'  => __( 'XML - Données XML', 'anythingllm-chatbot' ),
+                            'html' => __( 'HTML - Page web', 'anythingllm-chatbot' ),
+                            'css'  => __( 'CSS - Feuille de style', 'anythingllm-chatbot' ),
+                            'js'   => __( 'JS - JavaScript', 'anythingllm-chatbot' ),
+                        ),
                     ),
                 ),
             ),
@@ -397,7 +443,7 @@ class OFAC_Settings {
             'ofac_placeholder_text'     => '',
             'ofac_max_chars'            => 5000,
             'ofac_max_file_size'        => 5,
-            'ofac_allowed_file_types'   => 'jpg,jpeg,png,gif,pdf,doc,docx,txt',
+            'ofac_allowed_file_types'   => array( 'jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'txt' ),
             'ofac_rate_limit'           => 30,
             'ofac_cache_duration'       => 3600,
             'ofac_data_retention_days'  => 30,
@@ -426,11 +472,20 @@ class OFAC_Settings {
      */
     public function get( $key, $default = null ) {
         if ( isset( $this->settings[ $key ] ) ) {
-            return $this->settings[ $key ];
+            $value = $this->settings[ $key ];
+        } else {
+            $value = get_option( $key, $default );
+            $this->settings[ $key ] = $value;
         }
 
-        $value = get_option( $key, $default );
-        $this->settings[ $key ] = $value;
+        // Migration: Convert old string format to array for file types
+        if ( 'ofac_allowed_file_types' === $key && is_string( $value ) && ! empty( $value ) ) {
+            $value = array_map( 'trim', explode( ',', $value ) );
+            $value = array_filter( $value );
+            // Save migrated value
+            update_option( $key, $value );
+            $this->settings[ $key ] = $value;
+        }
 
         return $value;
     }
